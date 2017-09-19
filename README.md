@@ -1,20 +1,16 @@
-Wildfly - CentOS Docker image
+JBoss AS 7.1.1.Final - CentOS Docker image
 ========================================
 
-[![Build Status](https://travis-ci.org/openshift-s2i/s2i-wildfly.svg?branch=master)](https://travis-ci.org/openshift-s2i/s2i-wildfly)
 
 This repository contains the source for building various versions of
-the WildFly application as a reproducible Docker image using
+the classic JBoss AS 7.1 application as a reproducible Docker image using
 [source-to-image](https://github.com/openshift/source-to-image).
 The resulting image can be run using [Docker](http://docker.io).
 
 Versions
 ---------------
-WildFly versions currently provided are:
-* WildFly v8.1 (deprecated)
-* WildFly v9.0 (deprecated)
-* WildFly v10.0 (10.0.0 Final)
-* WildFly v10.1
+JBoss AS versions currently provided are:
+* JBoss AS 7.1.1.Final 
 
 CentOS versions currently provided are:
 * CentOS7
@@ -26,26 +22,20 @@ Installation
 This image is available on DockerHub.  To download it, run:
 
 ```
-$ docker pull openshift/wildfly-101-centos7
+$ docker pull ejlp12/jbossas-711-centos7
 
 ```
 
-or
+To build a JBoss AS image from scratch, run:
 
 ```
-$ docker pull openshift/wildfly-100-centos7
-```
-
-To build a WildFly image from scratch, run:
-
-```
-$ git clone https://github.com/openshift-s2i/s2i-wildfly.git
-$ cd s2i-wildfly
-$ make build VERSION=10.1
+$ git clone https://github.com/ejlp12/s2i-jboss-as.git
+$ cd s2i-jboss-as
+$ make build VERSION=7.1.1
 ```
 
 ** Note: by omitting the `VERSION` parameter, the build/test action be performed
-on all provided versions of WildFly.**
+on all provided versions of JBoss AS.**
 
 Usage
 ---------------------
@@ -54,8 +44,8 @@ using standalone [S2I](https://github.com/openshift/source-to-image) and then ru
 resulting image with [Docker](http://docker.io) execute:
 
 ```
-$ s2i build git://github.com/openshift/openshift-jee-sample openshift/wildfly-101-centos7 wildflytest
-$ docker run -p 8080:8080 wildflytest
+$ s2i build git://github.com/openshift/openshift-jee-sample ejlp12/jbossas-711-centos7 jbossastest
+$ docker run -p 8080:8080 jbossastest
 ```
 
 **Accessing the application:**
@@ -66,22 +56,22 @@ $ curl 127.0.0.1:8080
 Test
 ---------------------
 This repository also provides a [S2I](https://github.com/openshift/source-to-image) test framework,
-which launches tests to check functionality of a simple WildFly application built on top of the wildfly image.
+which launches tests to check functionality of a simple JBoss AS application built on top of the JBoss AS image.  
 
 *  **CentOS based image**
 
     ```
-    $ cd s2i-wildfly
-    $ make test VERSION=10.1
+    $ cd s2i-jbossas
+    $ make test VERSION=7.1.1
     ```
 
 **Notice: By omitting the `VERSION` parameter, the build/test action will be performed
-on all provided versions of WildFly.**
+on all provided versions of JBoss AS.**
 
 
 Repository organization
 ------------------------
-* **`<WildFly-version>`**
+* **`<JBossAS-version>`**
 
     * **Dockerfile**
 
@@ -99,16 +89,16 @@ Repository organization
           installing maven dependencies, building java code, etc..).
 
           In addition, the assemble script will distribute artifacts provided in the
-          application source project into the Wildfly installation:
+          application source project into the JBossAS installation:
 
-          Wildfly configuration files from the <application source>/cfg are copied
-          into the wildfly configuration directory.
+          JBossAS configuration files from the <application source>/cfg are copied
+          into the JBossAS configuration directory.
 
           Pre-built war files from the <application source>/deployments are moved
-          into the wildfly deployment directory.
+          into the JBossAS deployment directory.
 
           Wildfly modules from the <application source>/provided_modules are copied
-          into the wildfly modules directory.
+          into the JBossAS modules directory.
 
 
         *   **run**
@@ -127,17 +117,17 @@ Repository organization
 
         This folder contains commonly used modules
 
-        * **`wfbin/`**
+        * **`jbossasbin/`**
 
             Contains script used to launch wildfly after performing environment variable
             substitution into the standalone.xml configuration file.
 
-        * **`wfcfg/`**
+        * **`jbossascfg/`**
 
             Contains the default standalone.xml configuration which can be overriden by applications
             that provide a standalone.xml in <application_src>/cfg.
 
-        * **`wfmodules/`**
+        * **`jbossasmodules/`**
             Contains commonly used modules such as postgres and mysql database drivers.
 
     * **`test/`**
@@ -167,11 +157,11 @@ Image name structure
 ------------------------
 ##### Structure: openshift/1-2-3
 
-1. Platform name (lowercase) - wildfly
+1. Platform name (lowercase) - jboss-as
 2. Platform version(without dots) - 101
 3. Base builder image - centos7
 
-Example: `openshift/wildfly-101-centos7`
+Example: `openshift/jboss-as-711-centos7`
 Environment variables
 ---------------------
 To set environment variables, you can place them as a key value pair into a `.s2i/environment`
@@ -206,12 +196,12 @@ file inside your source code repository.
 
 * AUTO_DEPLOY_EXPLODED
 
-    When set to `true`, Wildfly will automatically deploy exploded war content.  When unset or set to `false`, 
+    When set to `true`, JBossAS will automatically deploy exploded war content.  When unset or set to `false`, 
     a `.dodeploy` file must be touched to trigger deployment of exploded war content.
 
 * MYSQL_DATABASE
 
-    If set, WildFly will attempt to define a MySQL datasource based on the assumption you have an OpenShift service named "mysql" defined.
+    If set, JBossAS will attempt to define a MySQL datasource based on the assumption you have an OpenShift service named "mysql" defined.
     It will attempt to reference the following environment variables which are automatically defined if the "mysql" service exists:
     MYSQL_SERVICE_PORT
     MYSQL_SERVICE_HOST
