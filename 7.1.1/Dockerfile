@@ -1,5 +1,5 @@
-# This image provides a base for building and running WildFly applications.
-# It builds using maven and runs the resulting artifacts on WildFly 10.1.0 Final
+# This image provides a base for building and running Jboss AS applications.
+# It builds using maven and runs the resulting artifacts on JBoss AS 7.1.1 Final
 
 FROM openshift/base-centos7
 

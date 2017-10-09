@@ -90,7 +90,8 @@
         <subsystem xmlns="urn:jboss:domain:configadmin:1.0"/>
         <subsystem xmlns="urn:jboss:domain:datasources:1.0">
             <datasources>
-<!-- ##DATASOURCES## -->
+<datasource jta="true" jndi-name="java:jboss/datasources/test_mysql" pool-name="test_mysql-TEST_MYSQL" use-java-context="true" enabled="true"> <connection-url>jdbc:mysql://myhost:myport/mydb</connection-url> <driver>mysql</driver> <security> <user-name>myusername</user-name> <password>mypasswd</password> </security> <validation> <validate-on-match>true</validate-on-match> <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"></valid-connection-checker> <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"></exception-sorter> </validation> </datasource>
+
 <!--
                 <datasource jndi-name="java:jboss/datasources/ExampleDS" pool-name="ExampleDS" enabled="true" use-java-context="true">
                     <connection-url>jdbc:h2:mem:test;DB_CLOSE_DELAY=-1</connection-url>
