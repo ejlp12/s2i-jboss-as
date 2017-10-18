@@ -2,6 +2,8 @@
 # This script is only work with Bash version > 4
 # Copied & modified from https://github.com/sterburg/ose-jboss_eap-oracle_ds/blob/master/s2i/bin/datasource.sh
 #
+
+CONFIG_FILE=/jboss-as/standalone/configuration/standalone-openshift.xml
  
 #. $JBOSS_HOME/bin/launch/launch-common.sh
 #. $JBOSS_HOME/bin/launch/tx-datasource.sh
@@ -399,4 +401,4 @@ echo "---> Inject datasources"
 inject_datasources
 
 echo "---> Starting JBoss AS"
-exec /jboss-as/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+exec /jboss-as/bin/standalone.sh -c standalone-openshift.xml -b 0.0.0.0 -bmanagement 0.0.0.0
