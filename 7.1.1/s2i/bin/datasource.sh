@@ -1,4 +1,5 @@
-#
+#!/usr/local/bin/bash
+# This script is only work with Bash version > 4
 # Copied & modified from https://github.com/sterburg/ose-jboss_eap-oracle_ds/blob/master/s2i/bin/datasource.sh
 #
  
@@ -239,7 +240,7 @@ function inject_timer_service() {
                     <!-- ##DATASTORES## -->\
                 </data-stores>\
             </timer-service>"
-  sed -i "s|<!-- ##TIMER_SERVICE## -->|${timerservice%$'\n'}|" $CONFIG_FILE
+  sed -i -e "s|<!-- ##TIMER_SERVICE## -->|${timerservice%$'\n'}|" $CONFIG_FILE
 }
 
 # Arguments:
@@ -249,7 +250,7 @@ function inject_timer_service() {
 function inject_datastore() {
   datastore="<database-data-store name=\"${1}_ds\" datasource-jndi-name=\"${2}\" database=\"${3}\" partition=\"${1}_part\"/>\
         <!-- ##DATASTORES## -->"
-  sed -i "s|<!-- ##DATASTORES## -->|${datastore%$'\n'}|" $CONFIG_FILE
+  sed -i -e "s|<!-- ##DATASTORES## -->|${datastore%$'\n'}|" $CONFIG_FILE
 }
 
 # Finds the name of the database services and generates data sources
@@ -297,7 +298,7 @@ function inject_datasources() {
         echo
         echo "Please make sure you provided correct service name and prefix in the mapping. Additionally please check that you do not set portalIP to None in the $service_name service. Headless services are not supported at this time."
         echo
-        echo "WARNING! The ${db,,} datasource for $prefix service WILL NOT be configured."
+        echo "WARNING! The ${db,,,}  datasource for $prefix service WILL NOT be configured."
         continue
       fi
 
@@ -314,8 +315,8 @@ function inject_datasources() {
       database=$(find_env "${prefix}_DATABASE")
 
       if [ -z $jndi ] || [ -z $username ] || [ -z $password ] || [ -z $database ]; then
-        echo "Ooops, there is a problem with the ${db,,} datasource!"
-        echo "In order to configure ${db,,} datasource for $prefix service you need to provide following environment variables: ${prefix}_USERNAME, ${prefix}_PASSWORD, ${prefix}_DATABASE."
+        echo "Ooops, there is a problem with the ${db,,,} datasource!"
+        echo "In order to configure ${db,,,} datasource for $prefix service you need to provide following environment variables: ${prefix}_USERNAME, ${prefix}_PASSWORD, ${prefix}_DATABASE."
         echo
         echo "Current values:"
         echo
@@ -324,7 +325,7 @@ function inject_datasources() {
         echo "${prefix}_DATABASE: $database"
 	echo "${prefix}_JNDI: $jndi"
         echo
-        echo "WARNING! The ${db,,} datasource for $prefix service WILL NOT be configured."
+        echo "WARNING! The ${db,,,} datasource for $prefix service WILL NOT be configured."
         continue
       fi
 
@@ -374,20 +375,19 @@ function inject_datasources() {
           echo
           echo "Please make sure you provide the correct database type in the mapping."
           echo
-          echo "WARNING! The ${db,,} datasource for $prefix service WILL NOT be configured."
+          echo "WARNING! The ${db,,,} datasource for $prefix service WILL NOT be configured."
           continue
           ;;
       esac
 
-      datasources="$datasources$(generate_datasource ${service,,}-${prefix} $jndi $username $password $host $port $database $checker $sorter $driver $service_name $jta)\n"
+      NL=$'\n'
+      datasources="$datasources$(generate_datasource ${service^^}-${prefix} $jndi $username $password $host $port $database $checker $sorter $driver $service_name $jta)$NL"
     done
   fi
 
-#  datasources="$datasources$(inject_tx_datasource)"
+#  datasources="$datasources$(inject_tx_datasource)$NL"
 
-#echo -e ${datasources/\\n/'\n'}
-#echo "${datasources%$'\n'}"
-  sed -i "s|<!-- ##DATASOURCES## -->|${datasources%$'\n'}|" $CONFIG_FILE
+  sed -i -e "s|<\!-- ##DATASOURCES## -->|${datasources%$'\n'}|" $CONFIG_FILE
 }
 
 function get_jndi_name() {
