@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/sh -x
 # This script is only work with Bash version > 4
 # Copied & modified from https://github.com/sterburg/ose-jboss_eap-oracle_ds/blob/master/s2i/bin/datasource.sh
 #
@@ -385,7 +385,7 @@ function inject_datasources() {
     done
   fi
 
-#  datasources="$datasources$(inject_tx_datasource)$NL"
+#  datasources="$datasources$(inject_tx_datasource)"
 
   sed -i -e "s|<\!-- ##DATASOURCES## -->|${datasources%$'\n'}|" $CONFIG_FILE
 }

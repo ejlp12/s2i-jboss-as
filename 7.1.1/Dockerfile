@@ -33,7 +33,7 @@ RUN INSTALL_PKGS="tar unzip bc which lsof java-1.7.0-openjdk java-1.7.0-openjdk-
 # Add s2i JBoss AS customizations
 ADD ./contrib/jbossmodules/ /jboss-as/modules/
 ADD ./contrib/jbossbin/standalone.conf /jboss-as/bin/standalone.conf
-ADD ./contrib/jbosscfg/standalone.xml /jboss-as/standalone/configuration/standalone-openshift.xml
+ADD ./contrib/jbosscfg/standalone-openshift.xml /jboss-as/standalone/configuration/standalone-openshift.xml
 ADD ./contrib/settings.xml $HOME/.m2/
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
