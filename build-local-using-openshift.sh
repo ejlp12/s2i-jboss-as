@@ -6,7 +6,7 @@ echo "This script will build using "docker build" using Openshift docker engine"
 echo "---> Setup Openshift environment first using follwing command: "
 echo 
 echo "     minishift-login-registry.sh" 
-echo " 
+echo  
 
 
 echo
