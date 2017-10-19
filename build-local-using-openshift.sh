@@ -1,12 +1,14 @@
 
 
 echo
-echo "This script will build using "docker build" using Openshift docker engine"
+echo "This script will build using "docker build" using Minishift docker engine"
 
-echo "---> Setup Openshift environment first using follwing command: "
+echo "---> Setup Minishift environment first using following command: "
 echo 
 echo "     minishift-login-registry.sh" 
 echo  
+
+read -p "To continue press any key, CTRL+C to cancel..."
 
 
 echo
