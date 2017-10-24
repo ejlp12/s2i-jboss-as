@@ -168,9 +168,10 @@ function generate_datasource() {
                     <connection-url>jdbc:oracle:thin:@$5:$6:$7</connection-url>
                     <driver-class>oracle.jdbc.OracleDriver</driver-class>
                     <driver>${10}</driver>
+                    <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
                     <pool>
                         <min-pool-size>25</min-pool-size>
-                        <max-pool-size>50</max-pool-size>
+                        <max-pool-size>300</max-pool-size>
                         <prefill>true</prefill>
                         <use-strict-min>true</use-strict-min>
                     </pool>
@@ -183,7 +184,8 @@ function generate_datasource() {
                         <background-validation>false</background-validation>
                     </validation>
                     <statement>
-                        <share-prepared-statements>false</share-prepared-statements>
+                        <prepared-statement-cache-size>32</prepared-statement-cache-size>
+                        <share-prepared-statements>true</share-prepared-statements>
                     </statement>
                 </datasource>"
       ;;
