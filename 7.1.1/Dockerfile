@@ -17,16 +17,20 @@ LABEL io.k8s.description="Platform for building and running JEE applications on 
       io.openshift.s2i.destination="/opt/s2i/destination" \
       com.redhat.deployments-dir="/jboss-as/standalone/deployments"
 
+    
 # Install Maven, JBoss AS 7.1.1 
-RUN INSTALL_PKGS="tar unzip bc which lsof java-1.7.0-openjdk java-1.7.0-openjdk-devel" && \
+RUN INSTALL_PKGS="wget tar unzip bc which lsof java-1.7.0-openjdk java-1.7.0-openjdk-devel" && \
     yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
     (curl -v https://www.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | \
     tar -zx -C /usr/local) && \
     ln -sf /usr/local/apache-maven-$MAVEN_VERSION/bin/mvn /usr/local/bin/mvn && \
-    mkdir -p $HOME/.m2 && \
-    (curl -v http://download.jboss.org/jbossas/7.1/jboss-as-$JBOSSAS_VERSION/jboss-as-$JBOSSAS_VERSION.tar.gz | tar zx -C / ) && \
+    mkdir -p $HOME/.m2 
+
+RUN wget http://download.jboss.org/jbossas/7.1/jboss-as-$JBOSSAS_VERSION/jboss-as-$JBOSSAS_VERSION.tar.gz && \
+    tar -xvf jboss-as-$JBOSSAS_VERSION.tar.gz && \
+    rm -f jboss-as-*.tar.gz && \
     mv /jboss-as-$JBOSSAS_VERSION /jboss-as && \
     mkdir -p /opt/s2i/destination
 
