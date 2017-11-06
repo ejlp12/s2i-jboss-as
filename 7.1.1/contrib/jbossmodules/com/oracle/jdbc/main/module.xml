@@ -24,7 +24,7 @@
 
 <module xmlns="urn:jboss:module:1.0" name="com.oracle.jdbc">
   <resources>
-    <resource-root path="ojdbc7.jar"/>
+    <resource-root path="ojdbc6.jar"/>
         <!-- Insert resources here -->
   </resources>
   <dependencies>
