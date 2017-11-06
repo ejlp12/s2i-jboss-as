@@ -28,7 +28,7 @@ RUN INSTALL_PKGS="wget tar unzip bc which lsof java-1.7.0-openjdk java-1.7.0-ope
     ln -sf /usr/local/apache-maven-$MAVEN_VERSION/bin/mvn /usr/local/bin/mvn && \
     mkdir -p $HOME/.m2 
 
-RUN (curl -v http://10.100.93.198/jboss-as-$JBOSSAS_VERSION/jboss-as-$JBOSSAS_VERSION.tar.gz | tar zx -C / ) && \
+RUN (curl -v http://10.100.93.198/jboss-as-$JBOSSAS_VERSION.tar.gz | tar zx -C / ) && \
      mv /jboss-as-$JBOSSAS_VERSION /jboss-as && \
      mkdir -p /opt/s2i/destination
 
