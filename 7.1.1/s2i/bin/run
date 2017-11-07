@@ -4,7 +4,7 @@
 #
 
 CONFIG_FILE=/jboss-as/standalone/configuration/standalone-openshift.xml
-CONF_FILE=/jboss-as/standalone/bin/standalone.conf
+CONF_FILE=/jboss-as/bin/standalone.conf
  
 #. $JBOSS_HOME/bin/launch/launch-common.sh
 #. $JBOSS_HOME/bin/launch/tx-datasource.sh
