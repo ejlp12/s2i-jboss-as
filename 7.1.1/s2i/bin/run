@@ -165,9 +165,9 @@ function generate_datasource() {
       ;;
 
     "oracle") ds="             <datasource jta=\"false\" jndi-name=\"$2\" pool-name=\"$1\" enabled=\"true\" use-ccm=\"false\">
-                    <connection-url>jdbc:oracle:thin:@$5:$6:$7</connection-url>
+                    <connection-url>jdbc:oracle:thin:@//$5:$6/$7</connection-url>
                     <!-- <driver-class>oracle.jdbc.OracleDriver</driver-class> -->
-                    <driver>ojdbc6</driver>
+                    <driver>oracle</driver>
                     <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
                     <pool>
                         <min-pool-size>25</min-pool-size>
