@@ -399,8 +399,10 @@ function get_jndi_name() {
   echo $(find_env "${prefix}_JNDI" "java:jboss/datasources/${service,,}")
 }
 
-echo "---> Inject datasources"
+echo "[S2I] Inject datasources"
 inject_datasources
 
-echo "---> Starting JBoss AS"
+sed -i -e 's|scan-interval="5000"|scan-interval="10000" deployment-timeout="600"|g' $CONFIG_FILE
+
+echo "[S2I] Starting JBoss AS"
 exec /jboss-as/bin/standalone.sh -c standalone-openshift.xml -b 0.0.0.0 -bmanagement 0.0.0.0
